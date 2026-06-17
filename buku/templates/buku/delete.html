@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="mb-6 flex items-center space-x-3">
+    <a href="{% url 'buku_list' %}" class="text-gray-400 hover:text-gray-600 transition text-lg"><i class="fa-solid fa-arrow-left"></i></a>
+    <div>
+        <p class="text-sm text-gray-500">Kelola Buku</p>
+        <h2 class="text-2xl font-bold text-gray-800">Hapus Buku</h2>
+    </div>
+</div>
+
+<div class="bg-white rounded-2xl shadow-xs border border-gray-100 p-8 max-w-xl">
+    <form method="POST" class="space-y-6">
+        {% csrf_token %}
+        <div>
+            <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-2">Anda akan menghapus:</h3>
+            <p class="text-lg font-bold text-gray-800 mb-2">{{ buku.judul }}</p>
+            <p class="text-sm text-gray-400 bg-gray-50 p-3 rounded-xl border border-gray-100 leading-relaxed">
+                Data peminjaman yang menggunakan buku ini tidak akan otomatis dihapus. Pastikan tidak ada transaksi aktif sebelum melakukan aksi ini.
+            </p>
+        </div>
+
+        <div class="flex justify-end space-x-3 pt-4 border-t border-gray-100">
+            <a href="{% url 'buku_list' %}" class="px-5 py-2.5 rounded-xl border border-gray-200 text-gray-500 hover:bg-gray-50 font-medium text-sm transition">Batal</a>
+            <button type="submit" class="px-5 py-2.5 rounded-xl bg-[#EF4444] hover:bg-red-600 text-white font-medium text-sm transition">Hapus</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

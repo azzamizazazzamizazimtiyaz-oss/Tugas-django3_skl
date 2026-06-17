@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="flex justify-between items-start mb-6">
+    <div>
+        <p class="text-sm text-gray-500">Data siswa yang bisa meminjam buku.</p>
+        <h2 class="text-2xl font-bold text-gray-800">User</h2>
+    </div>
+    <a href="{% url 'siswa_tambah' %}" class="bg-[#2563EB] hover:bg-blue-700 text-white font-medium px-5 py-2.5 rounded-xl shadow-sm transition flex items-center space-x-2 text-sm">
+        <i class="fa-solid fa-user-plus"></i><span>Tambah User</span>
+    </a>
+</div>
+
+<div class="bg-white rounded-2xl shadow-xs border border-gray-100 overflow-hidden flex-1">
+    <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="border-b border-gray-100 text-xs font-bold uppercase text-gray-400 bg-gray-50/50">
+                    <th class="py-4 px-6 text-center w-16">ID</th>
+                    <th class="py-4 px-6">Nama</th>
+                    <th class="py-4 px-6">Kelas</th>
+                    <th class="py-4 px-6">NIS</th>
+                    <th class="py-4 px-6 text-center">Status</th>
+                    <th class="py-4 px-6 text-center w-48">Aksi</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100 text-sm text-gray-600">
+                {% for siswa in siswa_list %}
+                <tr class="hover:bg-gray-50/50 transition">
+                    <td class="py-4 px-6 text-center font-medium text-gray-400">{{ siswa.id }}</td>
+                    <td class="py-4 px-6 font-semibold text-gray-800">{{ siswa.nama }}</td>
+                    <td class="py-4 px-6 text-gray-600">{{ siswa.kelas }}</td>
+                    <td class="py-4 px-6 text-gray-500">{{ siswa.nis }}</td>
+                    <td class="py-4 px-6 text-center">
+                        {% if siswa.is_active %}
+                            <span class="bg-emerald-50 text-emerald-600 px-3 py-1 rounded-full text-xs font-bold border border-emerald-100">Aktif</span>
+                        {% else %}
+                            <span class="bg-gray-50 text-gray-400 px-3 py-1 rounded-full text-xs font-bold border border-gray-200">Nonaktif</span>
+                        {% endif %}
+                    </td>
+                    <td class="py-4 px-6 text-center space-x-2">
+                        <div class="flex items-center gap-1.5">
+                            <a href="{% url 'siswa_detail' siswa.id %}" class="bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-semibold px-2.5 py-1.5 rounded-lg transition inline-block">Detail</a>
+                            <a href="{% url 'siswa_edit' siswa.id %}" class="bg-[#2563EB] hover:bg-blue-700 text-white text-xs font-bold px-2.5 py-1.5 rounded-lg transition inline-block">Edit</a>
+                            <a href="{% url 'siswa_hapus' siswa.id %}" class="bg-[#EF4444] hover:bg-red-800 text-white text-xs font-bold px-2.5 py-1.5 rounded-lg transition inline-block">Hapus</a>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center py-10 text-gray-400">Belum ada data anggota/user siswa.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

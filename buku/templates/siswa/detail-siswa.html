@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="mb-6 flex items-center space-x-3">
+    <a href="{% url 'siswa_list' %}" class="text-gray-400 hover:text-gray-600 transition text-lg">
+        <i class="fa-solid fa-arrow-left"></i>
+    </a>
+    <div>
+        <p class="text-sm text-gray-500">Kelola User</p>
+        <h2 class="text-2xl font-bold text-gray-800">Detail User</h2>
+    </div>
+</div>
+
+<div class="bg-white rounded-2xl shadow-xs border border-gray-100 p-8 max-w-4xl">
+    <div class="grid grid-cols-2 gap-4">
+        <div class="bg-gray-50/60 p-4 rounded-xl border border-gray-100">
+            <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">ID</label>
+            <p class="text-base font-bold text-gray-800">{{ siswa.id }}</p>
+        </div>
+        <div class="bg-gray-50/60 p-4 rounded-xl border border-gray-100">
+            <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Nama</label>
+            <p class="text-base font-bold text-gray-800">{{ siswa.nama }}</p>
+        </div>
+        <div class="bg-gray-50/60 p-4 rounded-xl border border-gray-100">
+            <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Kelas</label>
+            <p class="text-sm font-bold text-gray-700">{{ siswa.kelas }}</p>
+        </div>
+        <div class="bg-gray-50/60 p-4 rounded-xl border border-gray-100">
+            <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">NIS</label>
+            <p class="text-sm font-bold text-gray-700">{{ siswa.nis }}</p>
+        </div>
+        <div class="bg-gray-50/60 p-4 rounded-xl border border-gray-100 flex flex-col justify-center">
+            <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">Status</label>
+            <div>
+                {% if siswa.is_active %}
+                    <span class="bg-emerald-50 text-emerald-600 px-2.5 py-0.5 rounded-full text-xs font-bold border border-emerald-100">Aktif</span>
+                {% else %}
+                    <span class="bg-gray-50 text-gray-400 px-2.5 py-0.5 rounded-full text-xs font-bold border border-gray-200">Nonaktif</span>
+                {% endif %}
+            </div>
+        </div>
+        <div class="bg-gray-50/60 p-4 rounded-xl border border-gray-100">
+            <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Total Peminjaman</label>
+            <p class="text-sm font-bold text-gray-700">{{ total_peminjaman|default:"0" }}</p>
+        </div>
+        <div class="bg-gray-50/60 p-4 rounded-xl border border-gray-100 col-span-2">
+            <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Peminjaman Aktif</label>
+            <p class="text-sm text-gray-600 font-medium">
+                {{ peminjaman_aktif_count|default:"0" }} buku masih dipinjam.
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

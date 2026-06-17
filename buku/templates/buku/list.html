@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="flex justify-between items-start mb-6">
+    <div>
+        <p class="text-sm text-gray-500">Kelola data buku SIPUSTAKA.</p>
+        <h2 class="text-2xl font-bold text-gray-800">Daftar Buku</h2>
+    </div>
+    <a href="{% url 'buku_tambah' %}" class="bg-[#2563EB] hover:bg-blue-700 text-white font-medium px-5 py-2.5 rounded-xl shadow-sm transition flex items-center space-x-2 text-sm">
+        <i class="fa-solid fa-plus"></i><span>Tambah Buku</span>
+    </a>
+</div>
+
+<div class="bg-white rounded-2xl shadow-xs border border-gray-100 overflow-hidden flex-1">
+    <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="border-b border-gray-100 text-xs font-bold uppercase text-gray-400 bg-gray-50/50">
+                    <th class="py-4 px-6 text-center w-16">ID</th>
+                    <th class="py-4 px-6">Judul</th>
+                    <th class="py-4 px-6">Pengarang</th>
+                    <th class="py-4 px-6">Kategori</th>
+                    <th class="py-4 px-6">Penerbit</th>
+                    <th class="py-4 px-6 text-center">Tahun</th>
+                    <th class="py-4 px-6 text-center">Rak</th>
+                    <th class="py-4 px-6 text-center">Stok</th>
+                    <th class="py-4 px-6 text-center w-48">Aksi</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100 text-sm text-gray-600">
+                {% for buku in buku_list %}
+                <tr class="hover:bg-gray-50/50 transition">
+                    <td class="py-4 px-6 text-center font-medium text-gray-400">{{ buku.id }}</td>
+                    <td class="py-4 px-6 font-semibold text-gray-800">{{ buku.judul }}</td>
+                    <td class="py-4 px-6">{{ buku.pengarang }}</td>
+                    <td class="py-4 px-6"><span class="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-md text-xs font-medium">{{ buku.kategori }}</span></td>
+                    <td class="py-4 px-6 text-gray-500">{{ buku.penerbit }}</td>
+                    <td class="py-4 px-6 text-center">{{ buku.tahun_terbit }}</td>
+                    <td class="py-4 px-6 text-center font-medium text-blue-600"><span class="bg-blue-50 px-2.5 py-1.5 rounded-md text-xs">{{ buku.rak }}</span></td>
+                    <td class="py-4 px-6 text-center font-bold">{{ buku.stok }}</td>
+                    <td class="py-4 px-6 text-center space-x-1">
+                        <div class="flex items-center gap-2">
+                            <a href="{% url 'buku_detail' buku.id %}" class="bg-gray-100 hover:bg-gray-200 text-gray-600 text-xs font-semibold px-3 py-1.5 rounded-lg transition inline-block">Detail</a>
+                            <a href="{% url 'buku_edit' buku.id %}" class="bg-[#2563EB] hover:bg-blue-700 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition inline-block">Edit</a>
+                            <a href="{% url 'buku_delete' buku.id %}" class="bg-[#EF4444] hover:bg-red-800 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition inline-block">Hapus</a>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="9" class="text-center py-10 text-gray-400">Belum ada data buku di database perpustakaan.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

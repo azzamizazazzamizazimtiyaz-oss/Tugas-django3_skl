@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="flex justify-between items-start mb-6">
+    <div>
+        <p class="text-sm text-gray-500">Catat peminjaman dan pengembalian buku.</p>
+        <h2 class="text-2xl font-bold text-gray-800">Peminjaman</h2>
+    </div>
+    <a href="{% url 'peminjaman_tambah' %}" class="bg-[#2563EB] hover:bg-blue-700 text-white font-medium px-5 py-2.5 rounded-xl shadow-sm transition flex items-center space-x-2 text-sm">
+        <i class="fa-solid fa-plus"></i><span>Pinjam Buku</span>
+    </a>
+</div>
+
+<div class="bg-white rounded-2xl shadow-xs border border-gray-100 overflow-hidden flex-1">
+    <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="border-b border-gray-100 text-xs font-bold uppercase text-gray-400 bg-gray-50/50">
+                    <th class="py-4 px-6 text-center w-16">ID</th>
+                    <th class="py-4 px-6">Nama Peminjam</th>
+                    <th class="py-4 px-6">Buku</th>
+                    <th class="py-4 px-6">Tanggal Pinjam</th>
+                    <th class="py-4 px-6">Jatuh Tempo</th>
+                    <th class="py-4 px-6">Keperluan</th>
+                    <th class="py-4 px-6">Petugas</th>
+                    <th class="py-4 px-6 text-center">Status</th>
+                    <th class="py-4 px-6 text-center w-32">Aksi</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100 text-sm text-gray-600">
+                {% for pinjam in peminjaman_list %}
+                <tr class="hover:bg-gray-50/50 transition">
+                    <td class="py-4 px-6 text-center font-medium text-gray-400">{{ pinjam.id }}</td>
+                    <td class="py-4 px-6 font-semibold text-gray-800">{{ pinjam.siswa.nama }}</td>
+                    <td class="py-4 px-6 font-medium text-gray-700">{{ pinjam.buku.judul }}</td>
+                    <td class="py-4 px-6 text-gray-500">{{ pinjam.tanggal_pinjam|date:"d M Y" }}</td>
+                    <td class="py-4 px-6 text-gray-500">{{ pinjam.jatuh_tempo|date:"d M Y" }}</td>
+                    <td class="py-4 px-6 text-gray-500 max-w-xs truncate">{{ pinjam.keperluan }}</td>
+                    <td class="py-4 px-6 text-gray-500">Azzam Izaz</td>
+                    <td class="py-4 px-6 text-center">
+                        {% if pinjam.status == 'Dipinjam' %}
+                            <span class="bg-amber-50 text-amber-600 px-3 py-1 rounded-full text-xs font-bold border border-amber-100">Dipinjam</span>
+                        {% elif pinjam.status == 'Terlambat' %}
+                            <span class="bg-red-50 text-red-600 px-3 py-1 rounded-full text-xs font-bold border border-red-100">Terlambat</span>
+                        {% else %}
+                            <span class="bg-emerald-50 text-emerald-600 px-3 py-1 rounded-full text-xs font-bold border border-emerald-100">Dikembalikan</span>
+                        {% endif %}
+                    </td>
+                    <td class="py-4 px-6 text-center">
+                        {% if pinjam.status != 'Dikembalikan' %}
+                        <a href="{% url 'peminjaman_ubah_status' pinjam.id %}" class="bg-[#10B981] hover:bg-emerald-600 text-white text-xs font-bold px-4 py-2 rounded-xl transition inline-block">
+                            Kembalikan
+                        </a>
+                        {% else %}
+                        <span class="text-gray-400 text-xs font-medium"><i class="fa-solid fa-circle-check text-emerald-500 mr-1"></i> Selesai</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="9" class="text-center py-10 text-gray-400">Belum ada transaksi peminjaman buku.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

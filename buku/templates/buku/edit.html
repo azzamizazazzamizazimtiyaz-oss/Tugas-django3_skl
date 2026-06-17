@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="mb-6 flex items-center space-x-3">
+    <a href="{% url 'buku_list' %}" class="text-gray-400 hover:text-gray-600 transition text-lg"><i class="fa-solid fa-arrow-left"></i></a>
+    <div>
+        <p class="text-sm text-gray-500">Kelola Buku</p>
+        <h2 class="text-2xl font-bold text-gray-800">Edit Buku</h2>
+    </div>
+</div>
+
+<div class="bg-white rounded-2xl shadow-xs border border-gray-100 p-8 max-w-4xl">
+    <form method="POST" class="space-y-6">
+        {% csrf_token %}
+        <div class="grid grid-cols-2 gap-6">
+            <div>
+                <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Judul Buku</label>
+                <input type="text" name="judul" value="{{ buku.judul }}" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500 text-sm">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Pengarang</label>
+                <input type="text" name="pengarang" value="{{ buku.pengarang }}" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500 text-sm">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Kategori</label>
+                <select name="kategori" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500 text-sm bg-white">
+                    <option value="Novel" {% if buku.kategori == 'Novel' %}selected{% endif %}>Novel</option>
+                    <option value="Sejarah" {% if buku.kategori == 'Sejarah' %}selected{% endif %}>Sejarah</option>
+                    <option value="Pendidikan" {% if buku.kategori == 'Pendidikan' %}selected{% endif %}>Pendidikan</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Penerbit</label>
+                <input type="text" name="penerbit" value="{{ buku.penerbit }}" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500 text-sm">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Tahun Terbit</label>
+                <input type="number" name="tahun_terbit" value="{{ buku.tahun_terbit }}" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500 text-sm">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Rak / Lokasi</label>
+                <input type="text" name="rak" value="{{ buku.rak }}" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500 text-sm">
+            </div>
+            <div class="col-span-2">
+                <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Stok</label>
+                <input type="number" name="stok" value="{{ buku.stok }}" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500 text-sm">
+            </div>
+            <div class="col-span-2">
+                <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Deskripsi</label>
+                <textarea name="deskripsi" rows="4" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500 text-sm">{{ buku.deskripsi }}</textarea>
+            </div>
+        </div>
+
+        <div class="flex justify-end space-x-3 pt-4 border-t border-gray-100">
+            <a href="{% url 'buku_list' %}" class="px-5 py-2.5 rounded-xl border border-gray-200 text-gray-500 hover:bg-gray-50 font-medium text-sm transition">Batal</a>
+            <button type="submit" class="px-5 py-2.5 rounded-xl bg-[#2563EB] hover:bg-blue-700 text-white font-medium text-sm transition">Perbarui Buku</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
